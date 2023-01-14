@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<style>
+		body {
+			height:97vh;
+			width:99vw;
+			}
+		#button_container {
+			width:100%;
+			height: 5%;
+			min-height: 25px;
+			display: flex;
+			flex-direction: row;
+			align-items: stretch;
+			align-content: stretch;
+		}
+		#button_container>.button_big {
+			margin:5px;
+			min-height: 20px;
+			flex:2;
+		}
+		.button_small {
+			flex:0.5;
+			min-height: 20px;
+			margin:5px;
+		}
+		#textarea {
+			height:95%;
+			width:100%;
+			overflow: scroll;
+			white-space:pre;
+			border: 1px solid black;
+			border-radius: 5px;
+		}
+
+	</style>
+	<body>
+		<div id="button_container">
+			<button id="format" class="button_big" onclick="format()">Format</button>
+			<button id="clear" class="button_big" onclick="clearTextArea()">Clear</button>
+			<button class="button_small" onclick="compare()">+</button>
+		</div>
+		<div id="textarea" contenteditable></div>
+	</body>
+	<script src="./data.js" type="application/javascript"></script>
+	<script>
+		"use strict";
+		var textArea;
+		document.addEventListener('DOMContentLoaded', (ev)=> {
+			console.log('DOM Loaded');
+			this.populateData();
+			document.addEventListener('keydown', ev=>{
+				if(ev.key == ' ' && ev.ctrlKey) {
+					this.format();
+				}
+			});
+		});
+		function populateData(){
+			textArea= document.getElementById('textarea');	
+
+			//uncomment below line to add populate test data in text Area.
+			//textArea.innerHTML = JSON.stringify(data);
+			//console.log('textArea populated', textArea);
+		}
+		function format() {
+			try {
+				let input = textArea.innerHTML;
+				let parsedJson = JSON.parse(textArea.innerHTML);
+				console.log('parsed object', parsedJson);
+				textArea.innerHTML = JSON.stringify(parsedJson, null, 4);	
+			} catch(e) {
+				console.log("error while formatting", e);
+			}
+		}
+		
+		function clearTextArea() {
+			textArea.innerHTML= '';
+			console.log("textarea cleared");
+		}
+
+		function compare() {}
+	</script>
+</html>
